@@ -1,11 +1,10 @@
-import {Entity, PrimaryGeneratedColumn, Column} from "typeorm";
+import {Entity, PrimaryGeneratedColumn, Column, Index} from "typeorm";
 
 export enum Sex{
     MAN,
     WOMAN
 }
 
-// TODO : 요건 답을 012로 하지말고 답을 넣는게 맞으려나?
 export interface IChoiceSize {
     small: number,
     medium: number,
@@ -13,8 +12,8 @@ export interface IChoiceSize {
 }
 
 @Entity()
+@Index(["height", "weight", "sex"], { unique: true })
 export class MatchedSize {
-
     @PrimaryGeneratedColumn()
     id: number;
 
