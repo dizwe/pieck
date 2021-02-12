@@ -1,3 +1,4 @@
+import { Field, ObjectType, registerEnumType, ID, Int} from 'type-graphql';
 import {Entity, PrimaryGeneratedColumn, Column, Index} from "typeorm";
 
 export enum Sex{
@@ -11,12 +12,17 @@ export interface IChoiceSize {
     large: number
 }
 
+registerEnumType(Sex, {name: "Sex"});
+
+@ObjectType()
 @Entity()
 @Index(["height", "weight", "sex"], { unique: true })
 export class MatchedSize {
+    @Field(() => ID)
     @PrimaryGeneratedColumn()
     id: number;
 
+    @Field(() => Sex)
     @Column({
         type: "enum",
         enum: Sex,
@@ -24,9 +30,11 @@ export class MatchedSize {
     })
     sex: number;
 
+    @Field(type => Int)
     @Column()
     height: number;
 
+    @Field(type => Int)
     @Column()
     weight: number;
 
