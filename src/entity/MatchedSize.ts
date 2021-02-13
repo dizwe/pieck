@@ -1,8 +1,8 @@
 import {Entity, PrimaryGeneratedColumn, Column, Index} from "typeorm";
 
 export enum Sex{
-    MAN,
-    WOMAN
+    MAN='man',
+    WOMAN='woman'
 }
 
 export interface IChoiceSize {

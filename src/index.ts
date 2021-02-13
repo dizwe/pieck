@@ -13,18 +13,17 @@ createConnection().then(async connection => {
     const app = express();
     app.use(bodyParser.json());
 
-    // A schema is a collection of type definitions (hence "typeDefs")
-    // that together define the "shape" of queries that are executed against
-    // your data.함
     const typeDefs = gql`
         scalar JSONObject # 오잉 얘는 어떻게 되는거여
-        enum Sex{
-            MAN,
-            WOMAN
-        }
+
+        type ChoiceSize {
+            small: Int
+            medium: Int
+            large: Int
+       }
         
         type MatchedSize {
-            sex: Int # Enum으로 보여야 함  
+            sex: String  
             height: Int
             weight: Int
             shoulder: JSONObject # Object로 보여야 
@@ -46,7 +45,8 @@ createConnection().then(async connection => {
         
         # 이런 방식으로 물어볼거야. 그러면 이런 답을 해주면 돼!
         type Query {
-            get_matched_size(id: Int!): MatchedSize
+            get_matched_size_by_id(id: Int!): MatchedSize
+            get_matched_size_by_bio(sex: String!, height: Int!, weight: Int!): MatchedSize
         }
     `;
 
@@ -55,9 +55,13 @@ createConnection().then(async connection => {
     // schema. This resolver retrieves books from the "books" array above.
     const resolvers = {
         Query: {
-            get_matched_size: async (_: any, args: any) => {
+            get_matched_size_by_id: async (_: any, args: any) => {
                 const { id } = args;
                 return await matchedSizeRepository.findOne({ id: id });
+            },
+            get_matched_size_by_bio: async (_: any, args: any) => {
+                const { sex, height, weight } = args;
+                return await matchedSizeRepository.findOne({ sex: sex, height: height, weight: weight });
             }
         },
     };
