@@ -1,7 +1,10 @@
 {
    "compilerOptions": {
-      "lib": ["es2018", "esnext.asynciterable"],
-      "target": "es2018",
+      "lib": [
+         "es5",
+         "es6"
+      ],
+      "target": "es5",
       "downlevelIteration": true,
       "module": "commonjs",
       "moduleResolution": "node",

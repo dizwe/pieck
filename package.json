@@ -8,19 +8,13 @@
       "typescript": "3.7.5"
    },
    "dependencies": {
-      "apollo-server-express": "^2.19.2",
-      "body-parser": "^1.18.1",
-      "body-parser-graphql": "^1.1.0",
-      "class-validator": "^0.13.1",
-      "express": "^4.15.4",
-      "graphql": "^15.5.0",
-      "mysql": "^2.14.1",
+      "typeorm": "0.2.29",
       "reflect-metadata": "^0.1.10",
-      "type-graphql": "^1.1.1",
-      "typeorm": "0.2.29"
+      "mysql": "^2.14.1",
+      "express": "^4.15.4",
+      "body-parser": "^1.18.1"
    },
    "scripts": {
-      "start": "ts-node src/index.ts watch",
-      "dev": "nodemon 'src/index.ts' --exec 'ts-node' src/index.ts -e ts,graphql"
+      "start": "ts-node src/index.ts watch"
    }
 }
