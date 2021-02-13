@@ -4,9 +4,8 @@ import * as express from "express";
 import * as bodyParser from "body-parser";
 import {Request, Response} from "express";
 import {Routes} from "./routes";
-import {IChoiceSize, MatchedSize, Sex} from "./entity/MatchedSize";
+import {MatchedSize} from "./entity/MatchedSize";
 import { ApolloServer, gql } from 'apollo-server-express';
-
 
 
 createConnection().then(async connection => {
@@ -18,39 +17,36 @@ createConnection().then(async connection => {
     // that together define the "shape" of queries that are executed against
     // your data.함
     const typeDefs = gql`
+        scalar JSONObject # 오잉 얘는 어떻게 되는거여
         enum Sex{
             MAN,
             WOMAN
         }
-        type ChoiceSize {
-            small: Int
-            medium: Int
-            large: Int
-        }
         
         type MatchedSize {
-            sex: Sex # Enum으로 보여야 함  
+            sex: Int # Enum으로 보여야 함  
             height: Int
             weight: Int
-            shoulder: ChoiceSize # Object로 보여야 
-            chest: ChoiceSize
-            nipple: ChoiceSize # 209 젖가슴둘레
-            arm: ChoiceSize # 233 팔길이
-            waist: ChoiceSize
-            bottom_waist: ChoiceSize
-            thigh: ChoiceSize
-            crotch: ChoiceSize
-            length: ChoiceSize
-            hem: ChoiceSize
-            hip: ChoiceSize
-            crotch_height: ChoiceSize
-            middle_thigh: ChoiceSize
-            knee: ChoiceSize
-            calf: ChoiceSize
+            shoulder: JSONObject # Object로 보여야 
+            chest: JSONObject
+            nipple: JSONObject
+            arm: JSONObject
+            waist: JSONObject
+            bottom_waist: JSONObject
+            thigh: JSONObject
+            crotch: JSONObject
+            length: JSONObject
+            hem: JSONObject
+            hip: JSONObject
+            crotch_height: JSONObject
+            middle_thigh: JSONObject
+            knee: JSONObject
+            calf: JSONObject
         }
         
+        # 이런 방식으로 물어볼거야. 그러면 이런 답을 해주면 돼!
         type Query {
-            matched_size(id: Int!): MatchedSize
+            get_matched_size(id: Int!): MatchedSize
         }
     `;
 
@@ -59,7 +55,7 @@ createConnection().then(async connection => {
     // schema. This resolver retrieves books from the "books" array above.
     const resolvers = {
         Query: {
-            matched_size: async (_: any, args: any) => {
+            get_matched_size: async (_: any, args: any) => {
                 const { id } = args;
                 return await matchedSizeRepository.findOne({ id: id });
             }
