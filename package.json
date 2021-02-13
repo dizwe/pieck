@@ -8,7 +8,7 @@
       "typescript": "3.7.5"
    },
    "dependencies": {
-      "apollo-server": "^2.21.0",
+      "apollo-server-express": "^2.19.2",
       "body-parser": "^1.18.1",
       "body-parser-graphql": "^1.1.0",
       "class-validator": "^0.13.1",
