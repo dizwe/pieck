@@ -51,6 +51,7 @@ export class MatchedSizeController {
 
         // TODO : UPSERT 로 짜는게 맞을거 같음
         await this.matchedSizeRepository.insert(body_shapes);
+        response.send("Insert Data Done!");
     }
 
 
